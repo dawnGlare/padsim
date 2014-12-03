@@ -1,0 +1,241 @@
+* {
+	border:0;
+	padding:0;
+	margin:0;
+	font: 14px/1.2 Verdana;
+	line-height:140%
+}
+a, a:visited {
+	color:#318dbe
+}
+body {
+	background:#f8f8f8
+}
+#lineback {
+	border-left: 1px solid #d2d2d2;
+	border-right: 1px solid #d2d2d2;
+	z-index:-1;
+	position:absolute;
+	width:540px;
+	background:#fff;
+	margin-left: auto;
+	margin-right: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	text-align:right;
+}
+#game {
+	margin-top:25px
+}
+#arrowSurfaceC, #arrowSurface {
+	position:absolute;
+	pointer-events:none;
+	z-index:2;
+}
+#board {
+	background-image:url('http://pad.dawnglare.com/bg.png');
+	background-size:180px 180px;
+	height:450px;
+	border:20px solid #1f201f;
+	clear:both;
+	width:540px;
+	margin: 0 auto;
+}
+#damage{
+	margin:0 auto;
+	width:540px;
+	background:#fff;
+	min-height:100px;
+	margin-top:40px;
+}
+#total, #multic {
+	float:left;
+	width:270px;
+	height:25px;
+	text-align:center;
+}
+#multic #multi {
+	width:270px;
+	height:25px;
+	text-align:center;
+}
+.monster{
+	float:left;
+	width:90px;
+}
+.monster input {
+	text-align:center;
+	width:90px;
+	height:25px;
+}
+#damage:before {
+	position:absolute;
+	content:"\a Type: \a Attack: \a Damage Dealt: ";
+	width:200px;
+	margin-left:-200px;
+	text-align:right;
+	display:block;
+	white-space: pre;
+	line-height:25px;
+} 
+#entry {
+	border:1px solid #eee;
+	width:70px;
+    resize: none;
+	font: 18px/1.2 Courier New;
+	height:120px;
+	z-index:1;
+	overflow:hidden;
+	margin-bottom:10px;
+}
+#colorchange {
+	width:70px;
+    resize: none;
+	float:right;
+	clear:both;
+	font: 18px/1.2 Courier New;
+	height:200px;
+	z-index:1;
+	margin:20px;
+	overflow:hidden;
+}
+#colorto, #colorfrom {
+	border:1px solid #eee;
+	float:left;
+	width:30px;
+    resize: none;
+	font: 18px/1.2 Courier New;
+	height:20px;
+	text-align:center;
+}
+#infobooth {
+	width:500px;
+	background:#fff;
+	padding:20px;
+	margin: 0 auto
+}
+.image1 {
+	background:url("http://pad.dawnglare.com/atk.svg")
+}
+.image2 {
+	background:url("http://pad.dawnglare.com/clock.svg")
+}
+.image3 {
+	background:url("http://pad.dawnglare.com/question.svg")
+}
+.image4 {
+	background:url("http://pad.dawnglare.com/minus.png")
+}
+.image5 {
+	background:url("http://pad.dawnglare.com/plus.png")
+}
+.image6 {
+	background:url("http://pad.dawnglare.com/gear.png")
+}
+.image7 {
+	background:url("http://pad.dawnglare.com/Green.png")
+}
+.image8 {
+	background:url("http://pad.dawnglare.com/Red.png")
+}
+.image9 {
+	background:url("http://pad.dawnglare.com/Blue.png")
+}
+.image10 {
+	background:url("http://pad.dawnglare.com/Light.png")
+}
+.image11 {
+	background:url("http://pad.dawnglare.com/Dark.png")
+}
+.image12 {
+	background:url("http://pad.dawnglare.com/Heart.png")
+}
+.topbutton {
+	float:left;
+	margin:2px;
+	background-repeat: no-repeat;
+	background-size:20px 20px;
+	text-indent:-9999px;
+	width:20px;
+	height:20px
+}
+.tophelp {
+	float:left;
+	margin:2px;
+}
+#buttons {
+	padding-top:10px;
+	margin:0 auto;
+	width: 540px;
+	background-color: #fff;
+	min-height:20px
+}
+#buttons button {
+	width:90px;
+	background: #fff;
+	float:left
+}
+#buttons button:hover {
+	background: #eee
+}
+.tile, button {
+	-webkit-transition: opacity .4s ease-in-out;
+	-moz-transition: opacity .4s ease-in-out;
+	-ms-transition: opacity .4s ease-in-out;
+	-o-transition: opacity .4s ease-in-out;
+	transition: opacity .4s ease-in-out
+}
+.tile {
+	display: block;
+	float: left;
+	height: 90px;
+	width: 90px;
+	background-size:100%;
+	z-index:1
+}
+.jammer { background-image:url(http://pad.dawnglare.com/Jammer.png) }
+.black { background-color:#000 }
+.poison { background-image:url(http://pad.dawnglare.com/Poison.png) }
+.red { background-image:url(http://pad.dawnglare.com/Red.png) }
+.blue { background-image:url(http://pad.dawnglare.com/Blue.png) }
+.dark { background-image:url(http://pad.dawnglare.com/Dark.png) }
+.light { background-image:url(http://pad.dawnglare.com/Light.png) }
+.green { background-image:url(http://pad.dawnglare.com/Green.png) }
+.heart { background-image:url(http://pad.dawnglare.com/Heart.png) }
+.input-prompt {
+	width:90px;
+	margin-top:-22px;
+	display:block;
+	position: absolute;
+	font-style: italic;
+	color: #aaa;
+	text-align:center
+}
+#multic .input-prompt {
+	width:270px
+}
+input:disabled {
+	background:#fff
+}
+
+.test1{
+border:1px solid #616261; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+ background-color: #7d7e7d; background-image: -webkit-gradient(linear, left top, left bottom, from(#7d7e7d), to(#0e0e0e));
+ background-image: -webkit-linear-gradient(top, #7d7e7d, #0e0e0e);
+ background-image: -moz-linear-gradient(top, #7d7e7d, #0e0e0e);
+ background-image: -ms-linear-gradient(top, #7d7e7d, #0e0e0e);
+ background-image: -o-linear-gradient(top, #7d7e7d, #0e0e0e);
+ background-image: linear-gradient(to bottom, #7d7e7d, #0e0e0e);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#7d7e7d, endColorstr=#0e0e0e);
+}
+.test1 button {
+	background-size:30px 30px;
+	width:30px;
+	height:30px
+}
+#colorchange #convert{
+	width:70px;
+	height:20px;
+	line-height:15px
+}
