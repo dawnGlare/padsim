@@ -705,10 +705,10 @@ function requestAction(action, modifier){ // CLEAN IT UP
 	if (action == 'solve2' || action == 'fielddropped') solveBoard(2);
 	if (action == 'help') {
 		var showHelp = 
-			['<a href="javascript:requestAction(\'legend\')">Legend</a> for the color entry box on the right<br /><br />Damage (sword icon): Requires an attack, type, and multiplier. The types are entered by their initials (BG would mean Blue type, Green subtype)',
+			['<a href="javascript:requestAction(\'legend\')">Legend</a> for the color entry box on the right<br /><br />Damage (sword icon): Types (colors) are entered by their initials (same as legend)',
 			'<br /><br />Timer (stopwatch icon): toggles a 4 second timer<br /><br />Replay: Does not save during Change the World<br /><br />',
 			'CtW (change the world): move and drop orbs freely for 10 seconds<br /><br />Skyfall: causes random orbs to fall and adds multiple turns<br /><br />Gear has options (board colors for random/skyfall)',
-			'<br /><br />Contact me with suggestions at contact@dawnglare.com'
+			'<br /><br />Contact me with suggestions at contact@dawnglare.com : <a href="https://github.com/dawnGlare/padsim">GitHub link</a>'
 			].join('');
 		displayOutput(showHelp, 0);
 	}
