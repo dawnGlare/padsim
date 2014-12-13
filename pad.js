@@ -116,6 +116,9 @@ function clearMemory(item){
 		}
 	}
 	if (item=='timeout') {
+		for (i = 0; i < timeOut.length; i++) {
+			clearTimeout(timeOut[i]);
+		}
 		timeOut = new Array();
 	}
 	if (item == 'arrows'){
