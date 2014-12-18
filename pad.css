@@ -99,7 +99,6 @@ body {
 	height:200px;
 	z-index:1;
 	margin:20px;
-	overflow:hidden;
 }
 #colorto, #colorfrom {
 	border:1px solid #eee;
@@ -114,7 +113,19 @@ body {
 	width:500px;
 	background:#fff;
 	padding:20px;
-	margin: 0 auto
+	margin: 0 auto;
+	border-left: 1px solid #d2d2d2;
+	border-right: 1px solid #d2d2d2;
+	min-height:200px;
+}
+#adunit {
+	width:500px;
+	background:#fff;
+	padding:20px;
+	margin: 0 auto;
+	text-align:center;
+	border-left: 1px solid #d2d2d2;
+	border-right: 1px solid #d2d2d2;
 }
 .image1 {
 	background:url("http://pad.dawnglare.com/atk.svg")

@@ -20,6 +20,12 @@ var colors = ['blue','green','red','light','dark','heart']
 	, timerTime = 4000
 	, toDrop = 0;
 
+function hideUnit(obj) {
+	var link = document.getElementById(obj);
+	link.style.display = 'none';
+    return false;
+}
+
 function toObject(arr){
 	var rv = {};
 	for (var i = 0; i < arr.length; ++i)
