@@ -42,7 +42,7 @@
 		<button onclick="requestAction('skyfall')">SkyFall</button>
 		<div id="colorchange"><textarea id="entry" maxlength=30></textarea>
 		<input type="text" placeholder="H" maxlength="2" id="colorfrom" name="colorfrom">
-		<input type="text" placeholder="GB" maxlength="2" id="colorto" name="colorto">
+		<input type="text" placeholder="G" maxlength="2" id="colorto" name="colorto">
 		<br /><button onclick="requestAction('convert')" id="convert">convert</button></div>
 	</div>
 	<div id="infobooth">

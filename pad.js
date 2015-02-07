@@ -690,7 +690,7 @@ function requestAction(action, modifier){ // CLEAN IT UP
 		if ((swapHasHappened == 0 || skyFall == 1) && (timeOut.length < 1)){
 			var colorfrom = document.getElementById("colorfrom").value;
 			var colorto = document.getElementById("colorto").value;
-			if (colorfrom.length < 1 || colorto.length < 1) return;
+			if (colorfrom.length < 1 || colorto.length < 1 || colorfrom.length != colorto.length) return;
 			saveBoardState();
 			requestAction('copypattern');
 				var inputtemp = document.getElementById("entry").value;
@@ -699,9 +699,9 @@ function requestAction(action, modifier){ // CLEAN IT UP
 				for (var i = 0, len = inputtemp.length; i < len; i++) {
 					for (var g = 0, len2 = colorfrom.length; g < len2; g++) {
 						if (capitaliseFirstLetter(inputtemp[i]) == capitaliseFirstLetter(colorfrom[g])){
-							temparray = colorto.split('');
-							tempcolor = temparray[Math.floor(Math.random() * temparray.length)];
-							temp3[i] = capitaliseFirstLetter(tempcolor);
+							//temparray = colorto.split('');
+							//tempcolor = temparray[Math.floor(Math.random() * temparray.length)];
+							temp3[i] = capitaliseFirstLetter(colorto[g]);
 							continue;
 						}
 					}
@@ -717,6 +717,7 @@ function requestAction(action, modifier){ // CLEAN IT UP
 			['<a href="javascript:requestAction(\'legend\')">Legend</a> for the color entry box on the right<br /><br />Damage (sword icon): Types (colors) are entered by their initials (same as legend)',
 			'<br /><br />Timer (stopwatch icon): toggles a 4 second timer<br /><br />Replay: Does not save during Change the World<br /><br />',
 			'CtW (change the world): move and drop orbs freely for 10 seconds<br /><br />Skyfall: causes random orbs to fall and adds multiple turns<br /><br />Gear has options (board colors for random/skyfall)',
+			'<br /><br />Convert: LD DL would change Light orbs to Dark and Dark orbs to Light (max 2 characters, First changes to First, Second to Second)',
 			'<br /><br />Contact me with suggestions at contact@dawnglare.com : <a href="https://github.com/dawnGlare/padsim">GitHub link</a>'
 			].join('');
 		displayOutput(showHelp, 0);
