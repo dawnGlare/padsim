@@ -856,6 +856,7 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 	if ($_GET['freetoplay']) freeToPlay=1;
 	if ($_GET['timer']) timerTime=$_GET['timer']*1000;
 	if ($_GET['drops']) toDrop = 2;
+	if ($_GET['speed'] && $.isNumeric($_GET['speed'])) dropSpeed = $_GET['speed'];
 	requestAction('help');
 	
 	$(function(){
