@@ -922,13 +922,13 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 	});
 	$(".mtypes").bind({
 		keydown: function(e) {
-			if (e.which==82||e.which==71||e.which==66||e.which==76||e.which==68||e.which==80||e.which==74||e.which==46||e.which==8||e.which==37||e.which==38||e.which==39||e.which==40) return true;
+			if (e.which==9||e.which==82||e.which==71||e.which==66||e.which==76||e.which==68||e.which==80||e.which==74||e.which==46||e.which==8||e.which==37||e.which==38||e.which==39||e.which==40) return true;
 			return false;
 		}
 	});
 	$(".mnums").bind({
 		keydown: function(e) {
-			if ((e.which > 47 && e.which < 58) || e.which == 8 || e.which == 46 || e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40 || (e.which >= 96 && e.which <= 105)) return true;
+			if ((e.which > 47 && e.which < 58) || e.which == 8 || e.which==9||e.which == 46 || e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40 || (e.which >= 96 && e.which <= 105)) return true;
 			return false;
 		}
 	});
