@@ -8,6 +8,8 @@ var colors = ['blue','green','red','light','dark','heart']
 	, timerOn = 0
 	, dropSpeed = 500
 	, scale = 90
+	, offsetMargin = 0
+	, cornerspace = 20
 	, rows = 6, cols = 5
 	, scoreTracker = []
 	, swapHasHappened = 0
@@ -75,8 +77,8 @@ jQuery.fn.swap = function(b, trigger){
 	t.parentNode.insertBefore(b, t);
 	t.parentNode.removeChild(t);
 	if (trigger == 2){ // only legit swaps
-		if (swapHasHappened == 0) replayMoveSet.push(((b.offsetTop - b.parentNode.offsetTop)/scale)*6+((b.offsetLeft - b.parentNode.offsetLeft)/scale));
-		replayMoveSet.push(((a.offsetTop - a.parentNode.offsetTop)/scale)*6+((a.offsetLeft - a.parentNode.offsetLeft)/scale));
+		if (swapHasHappened == 0) replayMoveSet.push(((b.offsetTop - b.parentNode.offsetTop - offsetMargin)/scale)*6+((b.offsetLeft - b.parentNode.offsetLeft - offsetMargin)/scale));
+		replayMoveSet.push(((a.offsetTop - a.parentNode.offsetTop - offsetMargin)/scale)*6+((a.offsetLeft - a.parentNode.offsetLeft - offsetMargin)/scale));
 	}
 	return this;
 };
@@ -826,7 +828,11 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 		setTileAttribute(i, randColor, 1);
 		$('#tiles').append(divs[i]);
 	}
-	
+	for (i = 1; i < rows; i++) {
+		for (h = 1; h < cols; h++) {
+		  $( "#board" ).append( "<div class='cornerblock' style='left:"+((scale*i)-(cornerspace/2))+"px;top:"+((scale*h)-(cornerspace/2))+"px'></div>" );
+		}
+	}
 	randomizeBoard();
 	
 	createMonsters();
@@ -885,12 +891,28 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 		cursorAt: { top: scale/2, left: scale/2 }
 	});
 	$( ".tile" ).droppable({
+		tolerance: "pointer",
 		accept: ".tile",
 		over: function( event, ui ){
 			var draggable = ui.draggable, droppable = $(this);
 			if (skyFall == 1 && swapHasHappened == 0) saveBoardState();
 			draggable.swap(droppable, 2);
 			swapHasHappened = 1;
+		}
+	});
+	$( ".cornerblock" ).droppable({
+		tolerance: "pointer",
+		over: function( event, ui ) {
+			var cornerblockcount = 0;
+			$( ".tile" ).each(function() {
+				if (cornerblockcount++<30) $(this).droppable('option', 'disabled', true);
+			});
+		},
+		out: function( event, ui ) {
+			var cornerblockcount = 0;
+			$( ".tile" ).each(function() {
+				if (cornerblockcount++<30) $(this).droppable('option', 'disabled', false);
+			});
 		}
 	});
 	$("#entry").bind({

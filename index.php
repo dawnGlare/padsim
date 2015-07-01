@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Pad Simulator</title>
-	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
 	<link rel="stylesheet" type="text/css" href="pad.css">
 	<link rel="shortcut icon" href="http://mtg.dawnglare.com/favicon.ico?v1" />
 	<script src="pad.js"></script>

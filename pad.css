@@ -42,6 +42,7 @@ body {
 	clear:both;
 	width:540px;
 	margin: 0 auto;
+	position:relative;
 }
 #damage{
 	margin:0 auto;
@@ -199,12 +200,17 @@ body {
 	transition: opacity .4s ease-in-out
 }
 .tile {
+	margin:0px;
 	display: block;
 	float: left;
 	height: 90px;
 	width: 90px;
 	background-size:100%;
-	z-index:1
+	z-index:1;
+	position:relative;
+}
+.cornerblock{
+width:20px;height:20px;position:absolute;top:-1px;
 }
 .jammer { background-image:url(http://pad.dawnglare.com/Jammer.png) }
 .black { background-color:#000 }
