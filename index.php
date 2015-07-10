@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
+	<meta name="description" content="Puzzles and Dragons Simulator" />
 	<title>Pad Simulator</title>
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
