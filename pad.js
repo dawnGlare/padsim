@@ -20,7 +20,8 @@ var colors = ['blue','green','red','light','dark','heart']
 	, skyFall = 0
 	, showReplayArrows = 1
 	, timerTime = 4000
-	, toDrop = 0;
+	, toDrop = 0
+    , showComboItems = true;
 
 function hideUnit(obj) {
 	var link = document.getElementById(obj);
@@ -535,7 +536,15 @@ function calculateOutput(item){ // DAMAGE CALC OPTIMIZATINO // XX COMBO AND XX C
 		for (i = 0; i<colors2.length;i++){
 			if (typeof scoreTracker[colors2[i]] === "undefined") continue;
 			for (g = 0;g<scoreTracker[colors2[i]].length;g++){
-				comboText += scoreTracker[colors2[i]][g]+" x "+colors2[i]+'<br />';
+                if(showComboItems) {
+                    comboText += "<div class='comboInfoBox'>" +
+                        "<span>" + scoreTracker[colors2[i]][g]+" x </span> " +
+                        "<img width='32px' src='http://pad.dawnglare.com/" + capitaliseFirstLetter(colors2[i]) + ".png'>" +
+                        "</div>";
+                } else {
+                    comboText += scoreTracker[colors2[i]][g]+" x "+colors2[i]+'<br />';
+                }
+
 				totalCombo++;
 			}
 		}
@@ -733,7 +742,8 @@ function requestAction(action, modifier){ // CLEAN IT UP
 			'<button onclick="requestAction(\'boardcolor\', \'Light\')" id="bcLight" class="topbutton image10">Options</button>',
 			'<button onclick="requestAction(\'boardcolor\', \'Dark\')" id="bcDark" class="topbutton image11">Options</button>',
 			'<button onclick="requestAction(\'boardcolor\', \'Heart\')" id="bcHeart" class="topbutton image12">Options</button></div>',
-			'<br />Replayarrows: <a id="myLink" title="toggle replay" href="#" onclick="requestAction(\'replayarrows\', \'1\');">On</a> / <a id="myLink" title="toggle replay" href="#" onclick="requestAction(\'replayarrows\', \'0\');">Off</a>'
+			'<br />Replayarrows: <a id="myLink" title="toggle replay" href="#" onclick="requestAction(\'replayarrows\', \'1\');">On</a> / <a id="myLink" title="toggle replay" href="#" onclick="requestAction(\'replayarrows\', \'0\');">Off</a>',
+            '<br />Show combos with icons: <a onclick="showComboItems = true" href="#">On</a> / <a onclick="showComboItems = false" href="#">Off</a>'
 			].join('');
 		displayOutput(showHelp, 0);
 		for (index1 = 0; index1 < 2; ++index1){

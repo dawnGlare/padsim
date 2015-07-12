@@ -256,3 +256,11 @@ border:1px solid #616261; -webkit-border-radius: 3px; -moz-border-radius: 3px;bo
 	height:20px;
 	line-height:15px
 }
+
+.comboInfoBox {
+	height: 36px;
+}
+
+.comboInfoBox span, .comboInfoBox img {
+	vertical-align: middle;
+}
