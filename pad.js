@@ -901,7 +901,6 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 		cursorAt: { top: scale/2, left: scale/2 }
 	});
 	$( ".tile" ).droppable({
-		tolerance: "pointer",
 		accept: ".tile",
 		over: function( event, ui ){
 			var draggable = ui.draggable, droppable = $(this);
