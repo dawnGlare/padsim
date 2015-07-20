@@ -21,7 +21,9 @@ var colors = ['blue','green','red','light','dark','heart']
 	, showReplayArrows = 1
 	, timerTime = 4000
 	, toDrop = 0
-    , showComboItems = true;
+    , showComboItems = true
+	, shortenedData = []
+	, ajaxErrorOccured = 0;
 
 function hideUnit(obj) {
 	var link = document.getElementById(obj);
@@ -265,10 +267,32 @@ function copyPattern(modifier){
 		tilePattern += toLetter(divs[i].getAttribute('tileColor')).toUpperCase();
 	}
 	document.getElementById("entry").value = tilePattern;
-	displayOutput("<a href='http://pad.dawnglare.com/?patt="+tilePattern+"'>Pattern Link</a><br />", modifier);
-	if (replayMoveSet.length > 0) {
-		displayOutput("<a href='http://pad.dawnglare.com/?patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"'>Pattern with Replay Link</a>", 1);
-		displayOutput("<br /><a href='http://pad.dawnglare.com/?patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"&drops=1'>Pattern with Replay with Drops Link</a>", 1);
+	$.ajax({
+		 async: false,
+		 type: 'GET',
+		 url: 'http://pad.dawnglare.com/s.php?patt='+tilePattern+'&replay='+replayMoveSet.join('|'),
+		 success: function(data) {
+			 shortenedShareLink = data;
+		 },
+		 error: function() {
+			 ajaxErrorOccured = 1;
+		 }
+	});
+	
+	if(ajaxErrorOccured == 1){
+		displayOutput("<a href='http://pad.dawnglare.com/?patt="+tilePattern+"'>Pattern Link</a><br />", modifier);
+		if (replayMoveSet.length > 0) {
+			displayOutput("<a href='http://pad.dawnglare.com/?patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"'>Pattern with Replay Link</a>", 1);
+			displayOutput("<br /><a href='http://pad.dawnglare.com/?patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"&drops=1'>Pattern with Replay with Drops Link</a>", 1);
+		}
+		ajaxErrorOccured = 0;
+	}
+	else{
+		displayOutput("<a href='http://pad.dawnglare.com/?s="+shortenedShareLink+"0'>Pattern Link</a><br />", modifier);
+		if (replayMoveSet.length > 0) {
+			displayOutput("<a href='http://pad.dawnglare.com/?s="+shortenedShareLink+"1'>Pattern with Replay Link</a>", 1);
+			displayOutput("<br /><a href='http://pad.dawnglare.com/?s="+shortenedShareLink+"2'>Pattern with Replay with Drops Link</a>", 1);
+		}
 	}
 }
 
@@ -855,7 +879,32 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 			$_GET[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp.slice(1).join("").replace("+", " "));
 		}
 	}
-	if ($_GET['patt']){
+	if ($_GET['s']){
+		var replayOption = $_GET['s'].substr($_GET['s'].length - 1);
+		$.ajax({
+			 async: false,
+			 type: 'GET',
+			 url: 'http://pad.dawnglare.com/l.php?link='+$_GET['s'].slice(0, - 1),
+			 success: function(data) {
+				  shortenedData = data.split('~');
+			 }
+		});
+	}
+	if (shortenedData.length > 0){
+		document.getElementById("entry").innerHTML=shortenedData[0];
+		if (replayOption > 0){
+			if (replayOption == 2) toDrop = 2;
+			replayMoveSet=shortenedData[1].split('|');
+			for (i=0;i<replayMoveSet.length;i++){
+				if (replayMoveSet[i] > 29 || replayMoveSet[i] < 0) {
+					replayMoveSet = [];
+					break;
+				}
+			}
+		}
+		requestAction('applypattern', 2);
+	}
+	else if ($_GET['patt']){
 		document.getElementById("entry").innerHTML=$_GET['patt'];
 		if ($_GET['replay']){
 			replayMoveSet=$_GET['replay'].split('|');
