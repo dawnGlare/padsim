@@ -80,8 +80,8 @@ jQuery.fn.swap = function(b, trigger){
 	t.parentNode.insertBefore(b, t);
 	t.parentNode.removeChild(t);
 	if (trigger == 2){ // only legit swaps
-		if (swapHasHappened == 0) replayMoveSet.push(((b.offsetTop - b.parentNode.offsetTop - offsetMargin)/scale)*6+((b.offsetLeft - b.parentNode.offsetLeft - offsetMargin)/scale));
-		replayMoveSet.push(((a.offsetTop - a.parentNode.offsetTop - offsetMargin)/scale)*6+((a.offsetLeft - a.parentNode.offsetLeft - offsetMargin)/scale));
+		if (swapHasHappened == 0) replayMoveSet.push(((b.offsetTop - b.parentNode.offsetTop - offsetMargin)/scale)*rows+((b.offsetLeft - b.parentNode.offsetLeft - offsetMargin)/scale));
+		replayMoveSet.push(((a.offsetTop - a.parentNode.offsetTop - offsetMargin)/scale)*rows+((a.offsetLeft - a.parentNode.offsetLeft - offsetMargin)/scale));
 	}
 	return this;
 };
@@ -267,31 +267,39 @@ function copyPattern(modifier){
 		tilePattern += toLetter(divs[i].getAttribute('tileColor')).toUpperCase();
 	}
 	document.getElementById("entry").value = tilePattern;
-	$.ajax({
-		 async: false,
-		 type: 'GET',
-		 url: 'http://pad.dawnglare.com/s.php?patt='+tilePattern+'&replay='+replayMoveSet.join('|'),
-		 success: function(data) {
-			 shortenedShareLink = data;
-		 },
-		 error: function() {
-			 ajaxErrorOccured = 1;
-		 }
-	});
-	
-	if(ajaxErrorOccured == 1){
-		displayOutput("<a href='http://pad.dawnglare.com/?patt="+tilePattern+"'>Pattern Link</a><br />", modifier);
+	if (rows!=6 || cols !=5){
+		displayOutput("<a href='http://pad.dawnglare.com/?height="+cols+"&width="+rows+"&patt="+tilePattern+"'>Pattern Link</a><br />", modifier);
 		if (replayMoveSet.length > 0) {
-			displayOutput("<a href='http://pad.dawnglare.com/?patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"'>Pattern with Replay Link</a>", 1);
-			displayOutput("<br /><a href='http://pad.dawnglare.com/?patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"&drops=1'>Pattern with Replay with Drops Link</a>", 1);
+			displayOutput("<a href='http://pad.dawnglare.com/?height="+cols+"&width="+rows+"&patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"'>Pattern with Replay Link</a>", 1);
+			displayOutput("<br /><a href='http://pad.dawnglare.com/?height="+cols+"&width="+rows+"&patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"&drops=1'>Pattern with Replay with Drops Link</a>", 1);
 		}
-		ajaxErrorOccured = 0;
 	}
-	else{
-		displayOutput("<a href='http://pad.dawnglare.com/?s="+shortenedShareLink+"0'>Pattern Link</a><br />", modifier);
-		if (replayMoveSet.length > 0) {
-			displayOutput("<a href='http://pad.dawnglare.com/?s="+shortenedShareLink+"1'>Pattern with Replay Link</a>", 1);
-			displayOutput("<br /><a href='http://pad.dawnglare.com/?s="+shortenedShareLink+"2'>Pattern with Replay with Drops Link</a>", 1);
+	else {
+		$.ajax({
+			 async: false,
+			 type: 'GET',
+			 url: 'http://pad.dawnglare.com/s.php?patt='+tilePattern+'&replay='+replayMoveSet.join('|'),
+			 success: function(data) {
+				 shortenedShareLink = data;
+			 },
+			 error: function() {
+				 ajaxErrorOccured = 1;
+			 }
+		});
+		if(ajaxErrorOccured == 1){
+			displayOutput("<a href='http://pad.dawnglare.com/?patt="+tilePattern+"'>Pattern Link</a><br />", modifier);
+			if (replayMoveSet.length > 0) {
+				displayOutput("<a href='http://pad.dawnglare.com/?patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"'>Pattern with Replay Link</a>", 1);
+				displayOutput("<br /><a href='http://pad.dawnglare.com/?patt="+tilePattern+"&replay="+replayMoveSet.join('|')+"&drops=1'>Pattern with Replay with Drops Link</a>", 1);
+			}
+			ajaxErrorOccured = 0;
+		}
+		else{
+			displayOutput("<a href='http://pad.dawnglare.com/?s="+shortenedShareLink+"0'>Pattern Link</a><br />", modifier);
+			if (replayMoveSet.length > 0) {
+				displayOutput("<a href='http://pad.dawnglare.com/?s="+shortenedShareLink+"1'>Pattern with Replay Link</a>", 1);
+				displayOutput("<br /><a href='http://pad.dawnglare.com/?s="+shortenedShareLink+"2'>Pattern with Replay with Drops Link</a>", 1);
+			}
 		}
 	}
 }
@@ -371,7 +379,6 @@ function playReplay(solution){
 	toggle('draggable', 0);
 	var ctx = document.getElementById("arrowSurface").getContext("2d");
 	($(divs[replayMoveSet[0]])).css({ opacity:0.4 });
-	console.log(replayMoveSet.join(','));
 	var i=1;
 	function playReplayLoopF () {
 		timeOut.push(setTimeout(function () {
@@ -449,7 +456,7 @@ function getMatches(){
 				comboPosition.length = 0;
 			}
 			comboPosition.push(i);
-			if (comboPosition.length > 2 && i == f*rows+cols){
+			if (comboPosition.length > 2 && i == f*rows+rows-1){
 				comboPositionList = comboPositionList.concat(comboPosition);
 			}
 		}
@@ -652,7 +659,6 @@ function changeTimer (modifier){
 		if (timerTime > 0) timerTime = timerTime - 500;
 	}
 	else timerTime = timerTime + 500;
-	console.log(timerTime);
 	reset();
 }
 
@@ -753,6 +759,7 @@ function requestAction(action, modifier){ // CLEAN IT UP
 			'<br /><br />Timer (stopwatch icon): toggles a 4 second timer<br /><br />Replay: Does not save during Change the World<br /><br />',
 			'CtW (change the world): move and drop orbs freely for 10 seconds<br /><br />Skyfall: causes random orbs to fall and adds multiple turns<br /><br />Gear has options (board colors for random/skyfall)',
 			'<br /><br />Convert: LD DL would change Light orbs to Dark and Dark orbs to Light (max 2 characters, First changes to First, Second to Second)',
+			'<br /><br />You can play with <a href="http://pad.dawnglare.com/?height=7&width=7">different board sizes</a>!',
 			'<br /><br />Contact me with suggestions at contact@dawnglare.com : <a href="https://github.com/dawnGlare/padsim">GitHub link</a>'
 			].join('');
 		displayOutput(showHelp, 0);
@@ -778,7 +785,6 @@ function requestAction(action, modifier){ // CLEAN IT UP
 			toggle('boardcolor', 'Dark');
 			toggle('boardcolor', 'Heart');
 		}
-		console.log(colors);
 	}
 	if (action == 'boardcolor') toggle('boardcolor', modifier);
 	if (action == 'legend') {
@@ -856,6 +862,26 @@ function reset() {
 
 $(function(){		// CURSOR AT AND MOVING ORB SIZE
 
+	var $_GET = {}, args = location.search.substr(1).split(/&/);
+	for (var i=0; i<args.length; ++i) { // GET reader
+		var tmp = args[i].split(/=/);
+		if (tmp[0] != "") {
+			$_GET[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp.slice(1).join("").replace("+", " "));
+		}
+	}
+	if ($_GET['width'] && $.isNumeric($_GET['width']) && 2 < $_GET['width'] <10){
+		rows = parseInt($_GET['width']);
+		document.getElementById("board").style.width = rows*scale+"px";
+	}
+	if ($_GET['height'] && $.isNumeric($_GET['height']) && 2 < $_GET['height'] <10){
+		cols = parseInt($_GET['height']);
+		document.getElementById("board").style.height = cols*scale+"px";
+	}
+	if (rows!=6 || cols !=5){
+		document.getElementById("entry").maxLength = cols*rows;
+		document.getElementById("entry").style.width = rows*70/6+"px";
+		document.getElementById("entry").style.height = cols*120/5+"px";
+	}
 	for(var i = 0; i < rows*cols; i++){				// create board
 		var randColor = randomColor();
 		divs[i] = document.createElement("div");
@@ -872,13 +898,7 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 	createMonsters();
 	saveBoardState();
 	clearMemory('score');
-	var $_GET = {}, args = location.search.substr(1).split(/&/);
-	for (var i=0; i<args.length; ++i) { // GET reader
-		var tmp = args[i].split(/=/);
-		if (tmp[0] != "") {
-			$_GET[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp.slice(1).join("").replace("+", " "));
-		}
-	}
+
 	if ($_GET['s']){
 		var replayOption = $_GET['s'].substr($_GET['s'].length - 1);
 		$.ajax({
@@ -909,7 +929,7 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 		if ($_GET['replay']){
 			replayMoveSet=$_GET['replay'].split('|');
 			for (i=0;i<replayMoveSet.length;i++){
-				if (replayMoveSet[i] > 29 || replayMoveSet[i] < 0) {
+				if (replayMoveSet[i] > rows*cols-1 || replayMoveSet[i] < 0) {
 					replayMoveSet = [];
 					break;
 				}
