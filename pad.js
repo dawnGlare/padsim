@@ -869,11 +869,11 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 			$_GET[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp.slice(1).join("").replace("+", " "));
 		}
 	}
-	if ($_GET['width'] && $.isNumeric($_GET['width']) && 2 < $_GET['width'] <10){
+	if ($_GET['width'] && $.isNumeric($_GET['width']) && 2 < $_GET['width'] && $_GET['width'] <10){
 		rows = parseInt($_GET['width']);
 		document.getElementById("board").style.width = rows*scale+"px";
 	}
-	if ($_GET['height'] && $.isNumeric($_GET['height']) && 2 < $_GET['height'] <10){
+	if ($_GET['height'] && $.isNumeric($_GET['height']) && 2 < $_GET['height'] && $_GET['height'] < 10){
 		cols = parseInt($_GET['height']);
 		document.getElementById("board").style.height = cols*scale+"px";
 	}
