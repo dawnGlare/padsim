@@ -48,17 +48,6 @@
 		<br /><button onclick="requestAction('convert')" id="convert">convert</button></div>
 	</div>
 	<div id="infobooth">
-	</div><div id="adunit"><a href='#' onclick="hideUnit('adunit');return false;">Hide Ad</a><br />
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- pad_footer -->
-		<ins class="adsbygoogle"
-			 style="display:inline-block;width:320px;height:100px"
-			 data-ad-client="ca-pub-8590228402988995"
-			 data-ad-slot="1455723262"></ins>
-		<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
-	<script src="jquery.ui.touch-punch.min.js"></script>
+	</div><script src="jquery.ui.touch-punch.min.js"></script>
 </body>
 </html>

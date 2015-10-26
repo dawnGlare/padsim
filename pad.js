@@ -909,8 +909,11 @@ $(function(){		// CURSOR AT AND MOVING ORB SIZE
 				  shortenedData = data.split('~');
 			 }
 		});
+		if (shortenedData.length > 0 && shortenedData[0].length == 0){
+			alert('The map you were looking for couldn\'t be found');
+		}
 	}
-	if (shortenedData.length > 0){
+	if (shortenedData.length > 0 && shortenedData[0].length > 0){
 		document.getElementById("entry").innerHTML=shortenedData[0];
 		if (replayOption > 0){
 			if (replayOption == 2) toDrop = 2;
