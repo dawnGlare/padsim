@@ -5,10 +5,10 @@
 	<meta name="description" content="Puzzles and Dragons Simulator" />
 	<title>Pad Simulator</title>
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="pad.css">
-	<link rel="shortcut icon" href="http://mtg.dawnglare.com/favicon.ico?v1" />
-	<script src="pad.js"></script>
+	<link rel="shortcut icon" href="http://pad.dawnglare.com/favicon.ico?v2" />
+	<script src="http://pad.dawnglare.com/pad.min.js"></script>
 </head>
 <body>
 	<div id="lineback">
