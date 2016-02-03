@@ -4,13 +4,13 @@
 	<meta charset="utf-8" />
 	<meta name="description" content="Puzzles and Dragons Simulator" />
 	<title>Pad Simulator</title>
-	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="pad.css">
+	<link rel="stylesheet" type="text/css" href="http://pad.dawnglare.com/pad.css">
 	<link rel="shortcut icon" href="http://pad.dawnglare.com/favicon.ico?v2" />
-	<script src="http://pad.dawnglare.com/pad.min.js"></script>
+	<script src="http://pad.dawnglare.com/pad.min.js?v2"></script>
 </head>
-<body>
+<body><div id="wrapwrap">
 	<div id="lineback">
 		<button onclick="requestAction('help')" class="topbutton image3">?</button>
 		<button onclick="requestAction('options')" class="topbutton image6">Options</button>
@@ -49,5 +49,16 @@
 	</div>
 	<div id="infobooth">
 	</div><script src="jquery.ui.touch-punch.min.js"></script>
+	<div id="adunit"><a href='#' onclick="hideUnit('adunit');return false;">Hide Ad</a><br />
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- rec -->
+	<ins class="adsbygoogle"
+		 style="display:inline-block;width:300px;height:250px"
+		 data-ad-client="ca-pub-8590228402988995"
+		 data-ad-slot="6571896868"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+	</div></div>
 </body>
 </html>

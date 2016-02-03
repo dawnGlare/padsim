@@ -178,11 +178,11 @@ function toggle(item, command){
 	if (item == 'skyfall'){
 		if (skyFall == 0) {
 			skyFall = 1;
-			displayOutput('Skyfall (and extra turns) On');
+			displayOutput('Skyfall enabled.<br /><br />You will now be able to extra turns. Press SkyFall again to disable this. Replays will not save which orbs fall');
 			}
 		else {
 			skyFall = 0;
-			displayOutput('Skyfall (and extra turns) Off');
+			displayOutput('Skyfall has been disabled');
 			}
 		}
 	if (item == 'boardcolor'){
@@ -321,11 +321,13 @@ function changeTheWorld(){
 	if (freeToPlay != 1){
 		start();
 		ctwTimeOut.push(setTimeout(function(){
-			replayMoveSet=[];
-			$(document).trigger("mouseup");
-			swapHasHappened = 1;
-			changeTheWorldOn = 0;
-			requestAction('solve', 1);
+			if (changeTheWorldOn == 1){
+				replayMoveSet=[];
+				$(document).trigger("mouseup");
+				swapHasHappened = 1;
+				changeTheWorldOn = 0;
+				requestAction('solve', 1);
+			}
 		},10000));
 	}
 }
@@ -755,11 +757,12 @@ function requestAction(action, modifier){ // CLEAN IT UP
 	if (action == 'solve2' || action == 'fielddropped') solveBoard(2);
 	if (action == 'help') {
 		var showHelp = 
-			['<a href="javascript:requestAction(\'legend\')">Legend</a> for the color entry box on the right<br /><br />Damage (sword icon): Types (colors) are entered by their initials (same as legend)',
-			'<br /><br />Timer (stopwatch icon): toggles a 4 second timer<br /><br />Replay: Does not save during Change the World<br /><br />',
-			'CtW (change the world): move and drop orbs freely for 10 seconds<br /><br />Skyfall: causes random orbs to fall and adds multiple turns<br /><br />Gear has options (board colors for random/skyfall)',
-			'<br /><br />Convert: LD DL would change Light orbs to Dark and Dark orbs to Light (max 2 characters, First changes to First, Second to Second)',
-			'<br /><br />You can play with <a href="http://pad.dawnglare.com/?height=7&width=7">different board sizes</a>!',
+			['<a href="javascript:requestAction(\'legend\')">Legend</a> for the color entry box on the right and damage (sword icon at the top)<br /><br />',
+			'Icons above the board do things! Gear icon leads to <a href="javascript:requestAction(\'options\')">options</a>',
+			', stopwatch icon toggles an adjustable 4 second timer',
+			'<br /><br />You can play with <a href="http://pad.dawnglare.com/?height=7&width=7">different board sizes</a>! (change url)',
+			'<br /><br />CtW (change the world) allows you to move and drop orbs freely for 10 seconds (no replay)',
+			'<br /><br />Convert feature on the right will change all orbs of the first color to those of the second (supports 2 colors at once: GR=>RG)',
 			'<br /><br />Contact me with suggestions at contact@dawnglare.com : <a href="https://github.com/dawnGlare/padsim">GitHub link</a>'
 			].join('');
 		displayOutput(showHelp, 0);
@@ -774,7 +777,8 @@ function requestAction(action, modifier){ // CLEAN IT UP
 			'<button onclick="requestAction(\'boardcolor\', \'Dark\')" id="bcDark" class="topbutton image11">Options</button>',
 			'<button onclick="requestAction(\'boardcolor\', \'Heart\')" id="bcHeart" class="topbutton image12">Options</button></div>',
 			'<br />Replayarrows: <a id="myLink" title="toggle replay" href="#" onclick="requestAction(\'replayarrows\', \'1\');">On</a> / <a id="myLink" title="toggle replay" href="#" onclick="requestAction(\'replayarrows\', \'0\');">Off</a>',
-            '<br />Show combos with icons: <a onclick="showComboItems = true" href="#">On</a> / <a onclick="showComboItems = false" href="#">Off</a>'
+            '<br />Show combos with icons: <a onclick="showComboItems = true" href="#">On</a> / <a onclick="showComboItems = false" href="#">Off</a>',
+			'<br /><br />*Board colors affect possible drops from skyfall and colors from random boards'
 			].join('');
 		displayOutput(showHelp, 0);
 		for (index1 = 0; index1 < 2; ++index1){
@@ -790,7 +794,8 @@ function requestAction(action, modifier){ // CLEAN IT UP
 	if (action == 'legend') {
 		var showHelp = 
 			['Legend:<br />R = Red<br />B = Blue<br />G = Green<br />D = Dark (Purple)<br />L = Light (Yellow)<br />H = Heart<br />J = Jammer<br />P = Poison',
-			'<br /><br />Press Enter to change the board'
+			'<br /><br />Press Enter or hit the apply button to change the board',
+			'<br /><br /><a href="javascript:requestAction(\'help\')">Click here to return to information</a>'
 			].join('');
 		displayOutput(showHelp, 0);
 	}
@@ -802,10 +807,6 @@ function requestAction(action, modifier){ // CLEAN IT UP
 	if (action == 'replayarrows') toggle('replayarrows', modifier);
 	
 }
-
-	//for(key in comboTracker){ if(comboTracker.hasOwnProperty(key)){ console.log("key = " + key + ", value = " + comboTracker[key]); }}
-	//if (replayMoveSet.length != 0) document.getElementById("infobooth").innerHTML="Copied to Box!<br /><br />Pattern: <a href='http://pad.dawnglare.com/?patt="+tileColorPatt+"'>Link</a><br />+Replay: <a href='http://pad.dawnglare.com/?patt="+tileColorPatt+"&replay="+replayMoveSet.join('|')+"'>Link</a><br /><br />"+legendAry;
-
 
 var	clsStopwatch = function() {
 	var	startAt	= 0;
