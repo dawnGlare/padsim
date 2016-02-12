@@ -760,7 +760,7 @@ function requestAction(action, modifier){ // CLEAN IT UP
 			['<a href="javascript:requestAction(\'legend\')">Legend</a> for the color entry box on the right and damage (sword icon at the top)<br /><br />',
 			'Icons above the board do things! Gear icon leads to <a href="javascript:requestAction(\'options\')">options</a>',
 			', stopwatch icon toggles an adjustable 4 second timer',
-			'<br /><br />You can play with <a href="http://pad.dawnglare.com/?height=7&width=7">different board sizes</a>! (change url)',
+			'<br /><br />You can play with different <a href="http://pad.dawnglare.com/?height=6&width=7">board</a> <a href="http://pad.dawnglare.com/?height=4&width=5">sizes</a>! (change url)',
 			'<br /><br />CtW (change the world) allows you to move and drop orbs freely for 10 seconds (no replay)',
 			'<br /><br />Convert feature on the right will change all orbs of the first color to those of the second (supports 2 colors at once: GR=>RG)',
 			'<br /><br />Contact me with suggestions at contact@dawnglare.com : <a href="https://github.com/dawnGlare/padsim">GitHub link</a>'

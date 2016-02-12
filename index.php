@@ -6,9 +6,9 @@
 	<title>Pad Simulator</title>
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="http://pad.dawnglare.com/pad.css">
+	<link rel="stylesheet" type="text/css" href="http://pad.dawnglare.com/pad.css?v2">
 	<link rel="shortcut icon" href="http://pad.dawnglare.com/favicon.ico?v2" />
-	<script src="http://pad.dawnglare.com/pad.min.js?v2"></script>
+	<script src="http://pad.dawnglare.com/pad.min.js?v3"></script>
 </head>
 <body><div id="wrapwrap">
 	<div id="lineback">

@@ -185,8 +185,16 @@ body {
 }
 #buttons button {
 	width:90px;
-	background: #fff;
-	float:left
+	background: #f8f8f8;
+	float:left;
+	border: 1px solid #d2d2d2;
+	border-right: none;
+}
+#buttons button:first-child {
+	border-left: none;
+}
+#colorchange button {
+	border: 1px solid #d2d2d2;
 }
 #buttons button:hover {
 	background: #eee
