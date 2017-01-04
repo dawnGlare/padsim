@@ -23,7 +23,11 @@ var colors = ['blue','green','red','light','dark','heart']
 	, toDrop = 0
     , showComboItems = true
 	, shortenedData = []
-	, ajaxErrorOccured = 0;
+	, ajaxErrorOccured = 0
+	, randomizeMatchedOrbs = false
+	, shuffleInstead = false
+	, minimumMatched = 2
+	, minimumMatches = 2;
 
 function hideUnit(obj) {
 	var link = document.getElementById(obj);
@@ -201,13 +205,50 @@ function toggle(item, command){
 	if (item == 'replayarrows'){
 		if (command == 0){
 			showReplayArrows = 0;
-			displayOutput('Replay Arrows Off');
+			displayOutput('Setting changed: Replay Arrows Off');
 		}
 		else {
 			showReplayArrows = 1;
-			displayOutput('Replay Arrows On');
+			displayOutput('Setting changed: Replay Arrows On');
 		}
 	}
+	if (item == 'showComboItems'){
+		if (command == 0){
+			showComboItems = false;
+			displayOutput('Setting changed: Showing combo results with icons');
+		}
+		else {
+			showComboItems = true;
+			displayOutput('Setting changed: Showing combo results with text');
+		}
+	}
+	if (item == 'randomizeMatchedOrbs'){
+		if (command == 0){
+			randomizeMatchedOrbs = false;
+			displayOutput('Setting changed: Random boards cannot contain matches');
+		}
+		else {
+			randomizeMatchedOrbs = true;
+			displayOutput('Setting changed: Random boards can now contain matches');
+		}
+	}
+	if (item == 'shuffleInstead'){
+		if (command == 0){
+			shuffleInstead = false;
+			document.getElementById('random').innerHTML = 'Random';
+			displayOutput('Setting changed: Randomize boards instead of shuffling');
+		}
+		else {
+			shuffleInstead = true;
+			document.getElementById('random').innerHTML = 'Shuffle';
+			displayOutput('Setting changed: Shuffle boards instead of randomizing');
+		}
+	}
+	if (item == 'minimumCombo'){
+		minimumMatches = command;
+		displayOutput('Setting changed: Minimum combo is now '+(parseInt(command)+1)+'. <br />Sharing the board DOES NOT share this setting');
+	}
+	
 }
 
 function setTileAttribute(i, tileColor, opacity, classless){
@@ -222,7 +263,7 @@ function randomizeBoard(){
 	}
 	getTiles();
 	var matchedOrbs = getMatches();
-	if (matchedOrbs != false) randomizeBoard();
+	if (matchedOrbs != false && randomizeMatchedOrbs == false) randomizeBoard();
 }
 
 function saveBoardState(){
@@ -451,14 +492,14 @@ function getMatches(){
 		comboColor = ''; comboPosition = [];
 		for(var i = f*rows; i < f*rows+rows; i++){
 			if (divs[i].getAttribute("tileColor") != comboColor){
-				if (comboPosition.length > 2){
+				if (comboPosition.length > minimumMatched){
 					comboPositionList = comboPositionList.concat(comboPosition);
 				}
 				comboColor = divs[i].getAttribute("tileColor");
 				comboPosition.length = 0;
 			}
 			comboPosition.push(i);
-			if (comboPosition.length > 2 && i == f*rows+rows-1){
+			if (comboPosition.length > minimumMatched && i == f*rows+rows-1){
 				comboPositionList = comboPositionList.concat(comboPosition);
 			}
 		}
@@ -467,14 +508,14 @@ function getMatches(){
 		comboColor = ''; comboPosition = [];
 		for(var i = 0+f; i < rows*cols; i=i+rows){
 			if (divs[i].getAttribute("tileColor") != comboColor){
-				if (comboPosition.length > 2){
+				if (comboPosition.length > minimumMatched){
 					comboPositionList = comboPositionList.concat(comboPosition);
 				}
 				comboColor = divs[i].getAttribute("tileColor");
 				comboPosition.length = 0;
 			}
 			comboPosition.push(i);
-			if (comboPosition.length > 2 && i > rows*(cols-1)-1){
+			if (comboPosition.length > minimumMatched && i > rows*(cols-1)-1){
 				comboPositionList = comboPositionList.concat(comboPosition);
 			}
 		}
@@ -488,7 +529,8 @@ function getMatches(){
 		comboColor = divs[comboPositionList[i]].getAttribute('tileColor');
 		if (comboColor == 'black') continue;
 		floodFill.apply(null, convertXY(comboPositionList[i]));
-		solutions.push(track);
+		if(track.length > minimumMatches)
+			solutions.push(track);
 	} return solutions;
 	function floodFill(x, y){
 		fillPosition (x, y);
@@ -664,6 +706,25 @@ function changeTimer (modifier){
 	reset();
 }
 
+String.prototype.shuffle = function () {
+    var a = this.split(""),
+        n = a.length;
+
+    for(var i = n - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+    return a.join("");
+}
+
+function shuffleBoard() {
+	shuffledBoard = document.getElementById("entry").value.shuffle();
+	document.getElementById("entry").value=shuffledBoard;
+	requestAction('applypattern', 2);
+}
+
 function requestAction(action, modifier){ // CLEAN IT UP
 	if(typeof modifier === 'undefined') modifier = 0;
 	if (action == 'randomize' || (action == 'applypattern' && modifier != 2)) replayMoveSet=[];
@@ -680,7 +741,12 @@ function requestAction(action, modifier){ // CLEAN IT UP
 	if (action == 'randomize') {
 		if (colors.length < 2) displayOutput('Select a minimum of 2 colors in the options to randomize the board<br />', 0);
 		else {
-			randomizeBoard();
+			if (shuffleInstead){
+				shuffleBoard();
+			}
+			else {
+				randomizeBoard();
+			}
 			saveBoardState();
 			requestAction('copypattern');
 		}
@@ -776,9 +842,12 @@ function requestAction(action, modifier){ // CLEAN IT UP
 			'<button onclick="requestAction(\'boardcolor\', \'Light\')" id="bcLight" class="topbutton image10">Options</button>',
 			'<button onclick="requestAction(\'boardcolor\', \'Dark\')" id="bcDark" class="topbutton image11">Options</button>',
 			'<button onclick="requestAction(\'boardcolor\', \'Heart\')" id="bcHeart" class="topbutton image12">Options</button></div>',
-			'<br />Replayarrows: <a id="myLink" title="toggle replay" href="#" onclick="requestAction(\'replayarrows\', \'1\');">On</a> / <a id="myLink" title="toggle replay" href="#" onclick="requestAction(\'replayarrows\', \'0\');">Off</a>',
-            '<br />Show combos with icons: <a onclick="showComboItems = true" href="#">On</a> / <a onclick="showComboItems = false" href="#">Off</a>',
-			'<br /><br />*Board colors affect possible drops from skyfall and colors from random boards'
+			'<br />Random boards with matches: <a onclick="requestAction(\'randomizeMatchedOrbs\', \'1\');" href="#">On</a> / <a onclick="requestAction(\'randomizeMatchedOrbs\', \'0\');" href="#">Off</a>',
+			'<br />Replay arrows: <a href="#" onclick="requestAction(\'replayarrows\', \'1\');">On</a> / <a href="#" onclick="requestAction(\'replayarrows\', \'0\');">Off</a>',
+            '<br />Show combos results with icons: <a onclick="requestAction(\'showComboItems\', \'1\');" href="#">On</a> / <a onclick="requestAction(\'showComboItems\', \'0\');" href="#">Off</a>',
+            '<br />Instead of randomizing orbs, shuffle them: <a onclick="requestAction(\'shuffleInstead\', \'1\');" href="#">On</a> / <a onclick="requestAction(\'shuffleInstead\', \'0\');" href="#">Off</a>',
+            '<br />Minimum matchable combo: <a onclick="requestAction(\'minimumCombo\', \'2\');" href="#">3</a> / <a onclick="requestAction(\'minimumCombo\', \'3\');" href="#">4</a> / <a onclick="requestAction(\'minimumCombo\', \'4\');" href="#">5</a>',
+            '<br /><br />*Board colors affect possible drops from skyfall and colors from random boards'
 			].join('');
 		displayOutput(showHelp, 0);
 		for (index1 = 0; index1 < 2; ++index1){
@@ -805,6 +874,10 @@ function requestAction(action, modifier){ // CLEAN IT UP
 		changeTimer(modifier);
 	}
 	if (action == 'replayarrows') toggle('replayarrows', modifier);
+	if (action == 'showComboItems') toggle('showComboItems', modifier);
+	if (action == 'randomizeMatchedOrbs') toggle('randomizeMatchedOrbs', modifier);
+	if (action == 'shuffleInstead') toggle('shuffleInstead', modifier);
+	if (action == 'minimumCombo') toggle('minimumCombo', modifier);
 	
 }
 
