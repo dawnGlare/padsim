@@ -4,11 +4,11 @@
 	<meta charset="utf-8" />
 	<meta name="description" content="Puzzles and Dragons Simulator" />
 	<title>Pad Simulator</title>
-	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="http://pad.dawnglare.com/pad.css?v2">
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="pad.css?v3">
 	<link rel="shortcut icon" href="http://pad.dawnglare.com/favicon.ico?v2" />
-	<script src="http://pad.dawnglare.com/pad.min.js?v3"></script>
+	<script src="pad.js?v7"></script>
 </head>
 <body><div id="wrapwrap">
 	<div id="lineback">
@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	<div id="buttons">
-		<button onclick="requestAction('randomize')">Random</button>
+		<button id="random" onclick="requestAction('randomize')">Random</button>
 		<button onclick="requestAction('loadboard')">Reset</button>
 		<button onclick="requestAction('replay')">Replay</button>
 		<button onclick="requestAction('copypattern')">Share</button>
